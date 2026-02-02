@@ -1,25 +1,33 @@
 pipeline {
-  agent any
-  stages {
-    stage ('fetching the code from github') {
-      steps {
-         git branch: 'main' , url "https://github.com/PoojaP9606/maven.git"
-           }
-     stage ('maven build') {
-       steps {
-          echo "jenkins of pipeine job"
-           }
+    agent any
+
+    stages {
+        stage('Fetching the code from GitHub') {
+            steps {
+                git branch: 'main', url: 'https://github.com/PoojaP9606/maven.git'
+            }
         }
-     stage ('testing stage') {
-       steps {
-          echo "it is a testing stage"
-           }
+
+        stage('Maven Build') {
+            steps {
+                echo 'Jenkins pipeline - Maven build stage'
+                // mvn clean package   (uncomment if Maven is installed)
+            }
         }
-     stage ('deploy stage') {
-       steps {
-          echo "it is deploy stage"
-           }
+
+        stage('Testing Stage') {
+            steps {
+                echo 'It is a testing stage'
+                // mvn test
+            }
         }
-      }
+
+        stage('Deploy Stage') {
+            steps {
+                echo 'It is deploy stage'
+                // deployment commands here
+            }
+        }
     }
+}
 
