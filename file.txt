@@ -1,33 +1,28 @@
-pipeline {
-    agent any
 
-    stages {
-        stage('Fetching the code from GitHub') {
-            steps {
-                git branch: 'main', url: 'https://github.com/PoojaP9606/maven.git'
-            }
-        }
 
-        stage('Maven Build') {
-            steps {
-                echo 'Jenkins pipeline - Maven build stage'
-                // mvn clean package   (uncomment if Maven is installed)
-            }
+pipeline{
+   agent any
+   stages{
+     stage('Fetching the code from remote repo'){
+         steps {
+          git branch: 'main', url: 'https://github.com/PoojaP9606/maven.git'
+           }
+       }
+     stage('build phase'){
+        steps{
+          echo 'this is a build stage'
         }
-
-        stage('Testing Stage') {
-            steps {
-                echo 'It is a testing stage'
-                // mvn test
-            }
-        }
-
-        stage('Deploy Stage') {
-            steps {
-                echo 'It is deploy stage'
-                // deployment commands here
-            }
-        }
+      }
+     stage('Create & deploy image'){
+          steps{
+             img = 'image-name'
+             docker.image("$image.name").run('--name conatiner_name -d -p 80:80')
+         }
+       }
+     stage('deploy phase'){
+         steps{
+            echo 'deploy information'
+          }
+       }
     }
-}
-
+ }
